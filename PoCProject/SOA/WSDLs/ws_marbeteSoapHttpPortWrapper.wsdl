@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ws_marbete"
+     targetNamespace="http://com/universal/Ws_marbete.wsdl"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://com/universal/Ws_marbete.wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="SOAPService">
+        <plnk:role name="ws_marbete" portType="tns:ws_marbete"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://com/universal/Ws_marbete.wsdl" location="ws_marbeteSoapHttpPort.wsdl"/>
+</wsdl:definitions>

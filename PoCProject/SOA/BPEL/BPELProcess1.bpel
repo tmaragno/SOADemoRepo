@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Thu Aug 02 18:24:26 BOT 2018
+  Author:  tmaragno
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcess1"
+               targetNamespace="http://xmlns.oracle.com/SOAUniversal/PoCProject/BPELProcess1"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SOAUniversal/PoCProject/BPELProcess1"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://com/universal/Ws_marbete.wsdl" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://com/universal/Ws_marbete.wsdl" location="../WSDLs/ws_marbeteSoapHttpPortWrapper.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <partnerLink name="SOAPService" partnerLinkType="ns1:SOAPService" myRole="ws_marbete"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Receive1_uspConsultaporpoliza_InputVariable" messageType="ns1:Ws_marbete_uspConsultaporpoliza"/>
+    <variable name="Reply1_uspConsultaporpoliza_OutputVariable"
+              messageType="ns1:Ws_marbete_uspConsultaporpolizaResponse"/>
+  </variables>
+  <sequence name="main">
+    <receive name="Receive1" partnerLink="SOAPService" portType="ns1:ws_marbete" operation="uspConsultaporpoliza"
+             variable="Receive1_uspConsultaporpoliza_InputVariable" createInstance="yes"/>
+    <assign name="assignResponse">
+      <copy>
+        <from>"200"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:outstringcodresultadoOut</to>
+      </copy>
+      <copy>
+        <from>"AU-179856"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:return/ns1:poliza</to>
+      </copy>
+      <copy>
+        <from>"15-DEC-18"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:return/ns1:fechaexpirar</to>
+      </copy>
+      <copy>
+        <from>"AWD 4X4"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:return/ns1:tipovehiculo</to>
+      </copy>
+      <copy>
+        <from>"G170831"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:return/ns1:placa</to>
+      </copy>
+      <copy>
+        <from>"JTEGH20V620075900"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:return/ns1:chasis</to>
+      </copy>
+      <copy>
+        <from>"TOYOTA RAV4"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:return/ns1:marca</to>
+      </copy>
+      <copy>
+        <from>"2002"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Reply1_uspConsultaporpoliza_OutputVariable.parameters/ns1:result/ns1:return/ns1:ano</to>
+      </copy>
+    </assign>
+    <reply name="Reply1" partnerLink="SOAPService" variable="Reply1_uspConsultaporpoliza_OutputVariable"
+           portType="ns1:ws_marbete" operation="uspConsultaporpoliza"/>
+  </sequence>
+</process>

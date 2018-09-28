@@ -1,0 +1,94 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://com/universal/Ws_marbete.wsdl" name="ws_marbete" targetNamespace="http://com/universal/Ws_marbete.wsdl">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://com/universal/Ws_marbete.wsdl" elementFormDefault="qualified">
+            <complexType name="HeaderseguridadUser">
+                <complexContent>
+                    <extension base="tns:HeaderseguridadBase">
+                        <sequence>
+                            <element name="idioma" type="string" nillable="true"/>
+                            <element name="appkey" type="string" nillable="true"/>
+                            <element name="tipoinfo" type="string" nillable="true"/>
+                            <element name="codigousuario" type="string" nillable="true"/>
+                            <element name="clave" type="string" nillable="true"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="HeaderseguridadBase">
+                <sequence/>
+            </complexType>
+            <element name="uspConsultaporpolizaElement">
+                <complexType>
+                    <sequence>
+                        <element name="headerseg" type="tns:HeaderseguridadUser" nillable="true"/>
+                        <element name="stringpoliza" type="string" nillable="true"/>
+                        <element name="stringcertificado" type="string" nillable="true"/>
+                        <element name="stringchasis" type="string" nillable="true"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uspConsultaporpolizaResponseElement">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="tns:Ws_marbeteUser_uspConsultaporpoliza_Out" nillable="true"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="Ws_marbeteUser_uspConsultaporpoliza_Out">
+                <sequence>
+                    <element name="outstringdescresultadoOut" type="string" nillable="true"/>
+                    <element name="outstringcodresultadoOut" type="string" nillable="true"/>
+                    <element name="return" type="tns:MarbeteObjUser" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                </sequence>
+            </complexType>
+            <complexType name="MarbeteObjUser">
+                <complexContent>
+                    <extension base="tns:MarbeteObjBase">
+                        <sequence>
+                            <element name="poliza" type="string" nillable="true"/>
+                            <element name="fechaexpirar" type="string" nillable="true"/>
+                            <element name="tipovehiculo" type="string" nillable="true"/>
+                            <element name="placa" type="string" nillable="true"/>
+                            <element name="chasis" type="string" nillable="true"/>
+                            <element name="marca" type="string" nillable="true"/>
+                            <element name="ano" type="string" nillable="true"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="MarbeteObjBase">
+                <sequence/>
+            </complexType>
+        </schema>
+    </types>
+    <message name="Ws_marbete_uspConsultaporpoliza">
+        <part name="parameters" element="tns:uspConsultaporpolizaElement"/>
+    </message>
+    <message name="Ws_marbete_uspConsultaporpolizaResponse">
+        <part name="parameters" element="tns:uspConsultaporpolizaResponseElement"/>
+    </message>
+    <portType name="ws_marbete">
+        <operation name="uspConsultaporpoliza">
+            <input message="tns:Ws_marbete_uspConsultaporpoliza"/>
+            <output message="tns:Ws_marbete_uspConsultaporpolizaResponse"/>
+        </operation>
+    </portType>
+    <binding name="ws_marbeteSoapHttp" type="tns:ws_marbete">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="uspConsultaporpoliza">
+            <soap:operation soapAction="http://com/universal/Ws_marbete.wsdl/uspConsultaporpoliza"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="ws_marbete">
+        <port name="ws_marbeteSoapHttpPort" binding="tns:ws_marbeteSoapHttp">
+            <soap:address location="http://login.universal.com.do:7778/ws_marbete/ws_marbeteSoapHttpPort"/>
+        </port>
+    </service>
+</definitions>
